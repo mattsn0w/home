@@ -1,0 +1,42 @@
+# Setup Wi-Fi on the RPi2
+vi /etc/wpa_supplicant/wpa_supplicant.conf
+
+# Download graphite stuffs
+wget https://github.com/graphite-project/graphite-web/archive/0.9.13-pre1.tar.gz
+mv 0.9.13-pre1.tar.gz graphite-web_0.9.13-pre1.tar.gz 
+wget https://github.com/graphite-project/whisper/archive/0.9.13-pre1.tar.gz
+mv 0.9.13-pre1.tar.gz graphite-whisper_0.9.13-pre1.tar.gz 
+wget https://github.com/graphite-project/carbon/archive/0.9.13-pre1.tar.gz
+mv 0.9.13-pre1.tar.gz graphite-carbon_0.9.13-pre1.tar.gz 
+
+# Apt-get install all the stuffs
+apt-get install nginx
+apt-get install python-pip
+apt-get install python-cairo
+apt-get install python-dev
+
+# Pip install the python libs
+pip install gunicorn
+pip install twisted
+pip install django
+pip install django-tagging
+pip install pytz
+
+# Setup our graphite user and group. We run as graphite for the web-app.
+groupadd graphite
+useradd -g graphite graphite
+
+# In /opt/graphite/conf/ setup the configs.
+cp carbon.conf.example carbon.conf
+cp storage-schemas.conf.example storage-schemas.conf
+cp storage-aggregation.conf.example  storage-aggregation.conf
+
+# Most important step. You must rename the .wsgi script or else gunicorm will fail to load due to a name collision.
+cp graphite.wsgi.example /opt/graphite/webapp/graphite/graphite_wsgi.py
+chown -R graphite:graphite /opt/graphite/webapp/
+
+# Startup the webapp
+# first init that Django shit!
+cd /opt/graphite/webapp/graphite ; python manage.py syncdb
+
+gunicorn -b 127.0.0.1:8080 -u graphite -g graphite -w 4 --log-file=/tmp/gunicorn.log --log-level=debug  graphite_wsgi:application
