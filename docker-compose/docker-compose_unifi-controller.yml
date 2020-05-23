@@ -1,0 +1,31 @@
+version: '3'
+
+volumes:
+  unificonfig:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: 'addr=172.16.1.50,nolock,soft,rw'
+      device: ':/tanker/docker/unifi/config'
+
+
+services:
+  ubiquiti:
+    image: 'linuxserver/unifi-controller:5.10.26-ls32'
+    hostname: unifi
+    ports:
+      - '3478:3478/udp'
+      - '10001:10001/udp'
+      - '8080:8080'
+      - '8081:8081'
+      - '8443:8443'
+      - '8843:8843'
+      - '8880:8880'
+      - '6789:6789'
+    environment:
+      - 'PUID=1000'
+      - 'PGID=1000'
+      - 'MEM_LIMIT=1024M'
+    volumes:
+      - 'unificonfig:/config'
+    restart: unless-stopped
