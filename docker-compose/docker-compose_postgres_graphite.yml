@@ -1,0 +1,26 @@
+# Use postgres/example user/password credentials
+version: '3'
+services:
+  db:
+    image: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: MY_INSECURE_PASSWORD
+    ports:
+      - 5432:5432
+    volumes:
+      - 'pgsqlstorage:/var/lib/postgresql/data'
+
+  adminer:
+    image: adminer
+    restart: unless-stopped
+    ports:
+      - 8081:8080
+
+volumes:
+  pgsqlstorage:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: tcp,rw,addr=172.16.1.50
+      device: ':/tanker/docker/pgsql'
