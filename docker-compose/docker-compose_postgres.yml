@@ -1,0 +1,28 @@
+version: '3'
+services:
+  db:
+    image: 'postgres'
+    restart: unless-stopped
+    hostname: postgresql
+    ports:
+      - '5432:5432'
+    environment:
+      - 'POSTGRES_PASSWORD=No0.pSql4ju'
+      - 'PGDATA=/var/lib/postgresql/data/pgdata'
+    volumes:
+      - 'pgdata:/var/lib/postgresql/data'
+
+  adminer:
+    image: adminer
+    restart: unless-stopped
+    ports:
+      - 8081:8080
+
+
+volumes:
+  pgdata:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: tcp,rw,addr=172.16.1.50
+      device: ':/tanker/docker/postgresql'
