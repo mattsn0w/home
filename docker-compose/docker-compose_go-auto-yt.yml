@@ -1,0 +1,28 @@
+version: '3.6'
+
+services:
+  go-auto-yt:
+    image: 'xiovv/go-auto-yt:stable'
+    restart: always
+    ports:
+      - '9000:8080'
+    environment:
+      - 'PUID=1234'
+      - 'PGID=5678'
+      - 'UMASK_SET=022'
+    volumes:
+      - 'downloads:/app/downloads'
+      - 'config:/app/config'
+
+
+volumes:
+  downloads:
+    driver_opts:
+      type: 'nfs'
+      o: 'addr=172.16.1.50,nolock,soft,rw'
+      device: ':/tanker/docker/go-auto-yt/downloads'
+  config:
+    driver_opts:
+      type: 'nfs'
+      o: 'addr=172.16.1.50,nolock,soft,rw'
+      device: ':/tanker/docker/go-auto-yt/config'
