@@ -1,0 +1,32 @@
+version: '3'
+services:
+  graphite:
+    restart: unless-stopped
+    image: 'docker-graphite-statsd_statsd:latest'
+    environment:
+      - STATSD_DISABLED=1
+      - GRAPHITE_TIME_ZONE=America/Denver
+      - GRAPHITE_LOG_ROTATION=10
+    ports:
+      - '80:80'
+      - '2003-2004:2003-2004'
+      - '2023-2024:2023-2024'
+      - '8080:8080'
+    volumes:
+      - 'graphitestorage:/opt/graphite/storage'
+      - 'graphiteconfigs:/opt/graphite/conf'
+
+
+volumes:
+  graphitestorage:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: tcp,rw,addr=172.16.1.50
+      device: ':/tanker/docker/graphite/storage'
+  graphiteconfigs:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: tcp,rw,addr=172.16.1.50
+      device: ':/tanker/docker/graphite/conf'
