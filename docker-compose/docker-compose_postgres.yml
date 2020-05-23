@@ -7,7 +7,7 @@ services:
     ports:
       - '5432:5432'
     environment:
-      - 'POSTGRES_PASSWORD=No0.pSql4ju'
+      - 'POSTGRES_PASSWORD=MY_INSECURE_PASSWORD'
       - 'PGDATA=/var/lib/postgresql/data/pgdata'
     volumes:
       - 'pgdata:/var/lib/postgresql/data'
