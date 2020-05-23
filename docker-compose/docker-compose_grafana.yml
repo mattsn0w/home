@@ -1,0 +1,28 @@
+version: '3.6'
+services:
+  grafana:
+    image: 'grafana/grafana:latest'
+    hostname: grafana
+    ports:
+      - '3000:3000'
+    environment:
+      - 'GF_DEFAULT_INSTANCE_NAME=grafana'
+      - 'GF_METRICS_GRAPHITE=172.16.1.52'
+    volumes:
+      - 'grafanaetc:/etc/grafana'
+      - 'grafanavarlib:/var/lib/grafana'
+
+
+volumes:
+  grafanaetc:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: tcp,rw,addr=172.16.1.50
+      device: ':/tanker/docker/grafana/etc'
+  grafanavarlib:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: tcp,rw,addr=172.16.1.50
+      device: ':/tanker/docker/grafana/var'
