@@ -1,0 +1,7 @@
+(\.|^)rbxtrk\.com$
+(\.|^)rbxcdn\.com$
+(\.|^)roblox\.com$
+roblox-*\.cachefly\.net$
+roblox-css.cachefly.net
+roblox-t*\.cachefly\.net$
+(\.|^)epicgames\.com$
