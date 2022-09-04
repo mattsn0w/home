@@ -1,0 +1,8 @@
+# Pihole Paramount Ads
+tags.tiqcdn.com
+cdn.cquotient.com
+client-analytics.braintreegateway.com
+saa.cbsi.com
+tags.tiqcdn.com
+dpm.demdex.net
+pagead2.googlesyndication.com
