@@ -1,7 +1,7 @@
 # YouTube
-(\.|^)googlevideo\.com$
-(\.|^)youtube\.com$
-(\.|^)i\.ytimg\.com$
-(\.|^)ytimg\.com$
+googlevideo.com
+youtube.com
+i.ytimg.com
+ytimg.com
 youtubei.googleapis.com
-(\.|^)youtubei\.googleapis\.com$
+.youtubei.googleapis.com
