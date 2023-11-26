@@ -1,6 +1,5 @@
 scratch.mit.edu
 uploads.scratch.mit.edu
-(\.|^)reddit\.com$
-(\.|^)giphy\.com$
+reddit.com
 media.giphy.com
 limited-prod.giphy.map.fastly.net
